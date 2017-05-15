@@ -1,5 +1,7 @@
 import requests
 import json
+import urllib.request
+import os
 
 class ImageScraper(object):
 
@@ -26,8 +28,18 @@ class ImageScraper(object):
         imageLinks = [val["image"]["thumbnailLink"]
                       for val in response["items"]]
             
-        return imageLinks        
+        return imageLinks
+
+    def downloadImages(self, word):
+        links = self.sendRequest(word)
+
+        if not os.path.exists(word):
+            os.makedirs(word)
+        
+        for i in range(len(links)):
+            urllib.request.urlretrieve(links[i],
+                                       word + "/" + "img" + str(i) + ".png")
+        
 
 imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
-links = imS.sendRequest("cat")
-
+imS.downloadImages("orchid")
