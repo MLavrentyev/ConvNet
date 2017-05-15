@@ -22,9 +22,12 @@ class ImageScraper(object):
         
         response = requests.get(self.baseUrl, params=self.params).content       
         response = json.loads(response)
-        print(response["items"][0]["image"]["thumbnailLink"])
-        
+
+        imageLinks = [val["image"]["thumbnailLink"]
+                      for val in response["items"]]
+            
+        return imageLinks        
 
 imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
-values = imS.sendRequest("cat")
+links = imS.sendRequest("cat")
 
