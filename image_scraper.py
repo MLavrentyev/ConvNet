@@ -1,4 +1,5 @@
 import requests
+import json
 
 class ImageScraper(object):
 
@@ -9,6 +10,7 @@ class ImageScraper(object):
 
         self.params = {"searchType": "image",
                        "imgColorType": "color",
+                       "imgType": "photo",
                        "filter": "0",
                        "safe": "medium",
                        "key": apiKey}
@@ -17,10 +19,10 @@ class ImageScraper(object):
         # query - string the query to be sent in the Custom Search
         self.params["q"] = query
         self.params["cx"] = "002614461317739606024:pdrv0eu2ihq"
-        response = requests.get(self.baseUrl, params=self.params)
-
-        print(response)
-
+        
+        response = requests.get(self.baseUrl, params=self.params).content       
+        response = json.loads(response)
+        print(response["items"][0]["image"]["thumbnailLink"])
         
 
 imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
