@@ -50,6 +50,3 @@ class ImageScraper(object):
             urllib.request.urlretrieve(links[i],
                                        word + "/" + "img" + str(i) + ".png")
         
-
-imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
-imS.downloadImages("orchid", 24)
