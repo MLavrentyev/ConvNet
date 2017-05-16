@@ -17,21 +17,31 @@ class ImageScraper(object):
                        "safe": "medium",
                        "key": apiKey}
 
-    def sendRequest(self, query):
+    def sendRequest(self, query, numImages):
         # query - string the query to be sent in the Custom Search
+        # numImages - int number of images to return, rounded down to nearest 10
+
         self.params["q"] = query
         self.params["cx"] = "002614461317739606024:pdrv0eu2ihq"
-        
-        response = requests.get(self.baseUrl, params=self.params).content       
-        response = json.loads(response)
 
-        imageLinks = [val["image"]["thumbnailLink"]
-                      for val in response["items"]]
-            
+        imageLinks = []
+        for i in range(int(numImages/10)):
+            print(i)
+            self.params["start"] = i+1
+
+            response = requests.get(self.baseUrl, params=self.params).content       
+            response = json.loads(response)
+            print(response)
+            imageLinks.extend([val["image"]["thumbnailLink"]
+                          for val in response["items"]])
+        # end loop
+        
         return imageLinks
 
-    def downloadImages(self, word):
-        links = self.sendRequest(word)
+    def downloadImages(self, word, numImages):
+        # params - see sendRequest()
+
+        links = self.sendRequest(word, numImages)
 
         if not os.path.exists(word):
             os.makedirs(word)
@@ -42,4 +52,4 @@ class ImageScraper(object):
         
 
 imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
-imS.downloadImages("orchid")
+imS.downloadImages("orchid", 24)
