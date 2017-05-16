@@ -48,6 +48,9 @@ class ImageScraper(object):
 
         links = self.sendRequest(word, numImages)
 
+        if links is None:
+            return
+        
         if not os.path.exists("trainingData/" + word):
             os.makedirs("trainingData/" + word)
         
