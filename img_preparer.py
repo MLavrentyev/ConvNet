@@ -24,4 +24,13 @@ class ImageConverter(object):
         bPix = np.array(list(img.getdata(band=2))).reshape(self.imgWidth,
                                                            self.imgHeight)
 
-        return [rPix, gPix, bPix]
+        return np.array([rPix, gPix, bPix])
+
+    def scaleImage(self, imgArr):
+        return imgArr/255*2 - 1
+
+    def prepImage(self, imgPath):
+        arr = self.imageToNPArray(imgPath)
+        scaledArr = self.scaleImage(arr)
+
+        return scaledArr
