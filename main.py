@@ -1,5 +1,6 @@
 from image_scraper import ImageScraper
 from img_preparer import ImageConverter
+from convnet import ConvNet, ConvLayer, PoolLayer, FCLayer
 import os
 
 
@@ -30,5 +31,19 @@ def importTrainData():
 
     return allImgs, allLabels
 
-trainData, trainLabels = importTrainData()
+#trainData, trainLabels = importTrainData()
 
+def createLayers():
+    conv1 = ConvLayer((5,5), 1, 4, (150, 100, 3))
+    pool1 = PoolLayer((2,2), 2, conv1.outSize)
+    conv2 = ConvLayer((3,3), 1, 4, pool1.outSize)
+    pool2 = PoolLayer((3,3), 2, conv2.outSize)
+    fcl1 = FCLayer(15, pool2.outSize, prevIsPool=True)
+    fcl2 = FCLayer(1, fcl1.outSize)
+
+    layers = [conv1, pool1, conv2, pool2, fcl1, fcl2]
+
+    cNet = ConvNet(layers)
+
+    return cNet
+createLayers()
