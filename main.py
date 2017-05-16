@@ -10,4 +10,3 @@ def getTrainData(words, numImages):
     for word in words:
         imS.downloadImages(word, numImages)
 
-getTrainData(["cat", "tree", "giraffe", "house"], 100)
