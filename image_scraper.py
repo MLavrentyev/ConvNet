@@ -26,12 +26,11 @@ class ImageScraper(object):
 
         imageLinks = []
         for i in range(int(numImages/10)):
-            print(i)
             self.params["start"] = i+1
 
             response = requests.get(self.baseUrl, params=self.params).content       
             response = json.loads(response)
-            print(response)
+
             imageLinks.extend([val["image"]["thumbnailLink"]
                           for val in response["items"]])
         # end loop

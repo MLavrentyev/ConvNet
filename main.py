@@ -5,5 +5,9 @@ def getTrainData(words, numImages):
     # words - list of search terms to use
     # numImages - number of images to get for each category
 
-    pass
+    imS = ImageScraper("AIzaSyBjRRMtqV4VdybDPjr-tNObKI6qbAukdYE")
 
+    for word in words:
+        imS.downloadImages(word, numImages)
+
+getTrainData(["cat", "tree", "giraffe", "house"], 100)
