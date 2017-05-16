@@ -46,6 +46,6 @@ class ImageScraper(object):
             os.makedirs(word)
         
         for i in range(len(links)):
-            urllib.request.urlretrieve(links[i],
-                                       word + "/" + "img" + str(i) + ".png")
+            urllib.request.urlretrieve(links[i], "trainingData/" + word + \
+                                       "/" + "img" + str(i) + ".png")
         
