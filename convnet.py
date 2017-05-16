@@ -20,3 +20,12 @@ class ConvLayer(object):
 
         # Create the filters
         self.filters = [np.random.random(filtShape) for x in range(numFilts)]
+
+class PoolingLayer(object):
+
+    def __init__(self, poolShape, poolStep):
+        # poolShape - tuple (w, h) pooling shape
+        # poolStep - int step of the pooling layer
+
+        self.poolShape = poolShape
+        self.poolStep = poolStep
