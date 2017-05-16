@@ -28,9 +28,15 @@ class ImageScraper(object):
         for i in range(int(numImages/10)):
             self.params["start"] = i+1
 
-            response = requests.get(self.baseUrl, params=self.params).content       
+            response = requests.get(self.baseUrl, params=self.params).content
             response = json.loads(response)
 
+            if "error" in response:
+                print("The API request has encountered an error: " +
+                      response["error"]["errors"][0]["reason"])
+                return
+                
+            
             imageLinks.extend([val["image"]["thumbnailLink"]
                           for val in response["items"]])
         # end loop
@@ -42,8 +48,8 @@ class ImageScraper(object):
 
         links = self.sendRequest(word, numImages)
 
-        if not os.path.exists(word):
-            os.makedirs(word)
+        if not os.path.exists("trainingData/" + word):
+            os.makedirs("trainingData/" + word)
         
         for i in range(len(links)):
             urllib.request.urlretrieve(links[i], "trainingData/" + word + \
