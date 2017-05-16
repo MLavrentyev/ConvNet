@@ -8,7 +8,7 @@ class ConvNet(object):
     def __init__(self, layers):
 
         self.layers = layers
-        
+                
         
         
 class ConvLayer(object):
@@ -30,6 +30,24 @@ class ConvLayer(object):
         # Create the filters
         self.filters = [np.random.random(filtShape)*2 - 1
                         for x in range(numFilts)]
+
+    def forwardProp(self, inImg):
+        for filt in self.filters:
+            for r in range(self.outSize[0]):
+                for c in range(self.outSize[1]):
+                    startR = r*self.filtStep
+                    startC = c*self.filtStep
+                    print(inImg[0])
+                    piece = inImg[:,startR:startR+self.filtShape[0],
+                                  startC:startC+self.filtShape[1]]
+                    print(piece.shape)
+                    value = np.sum(np.multiply(filt, piece))
+                    print(value)
+                    
+                    break
+                break
+                    
+                
 
 class PoolLayer(object):
 
