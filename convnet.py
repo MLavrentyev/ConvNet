@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import ndimage
 from skimage.measure import block_reduce
+from functools import reduce
 
 class ConvNet(object):
 
@@ -22,7 +23,10 @@ class ConvNet(object):
         self.p2Shape = p2Shape
         self.p2Step = p2Step
 
-        
+        size1 = (np.array(imgShape) - np.array(p1Shape))//p1Step+1
+        size2 = (size1-np.array(p2Shape))//p2Step+1
+        self.c_h_weights = np.random.random((reduce(lambda x, y: x*y, size2), fcl1Size))
+        self.h_o_weights = np.random.random((fcl1Size, outSize))
 
         
 
@@ -38,6 +42,13 @@ class ConvNet(object):
         self.c2Out = self.forwardConvolution(self.p1Out, self.c2Filters)
         self.p2Out = self.forwardPooling(self.c2Out, self.p2Shape, self.p2Step)
         self.r2Out = self.applyReLU(self.p2Out)
+
+        self.hOut = self.forwardFCL(self.r2Out, self.c_h_weights)
+        self.hActOut = self.sigmoidActiv(self.hOut)
+        self.out = self.forwardFCL(self.hActOut, self.h_o_weights)
+        self.actOut = self.sigmoidActiv(self.out)
+
+        return(self.actOut)
 
     def forwardConvolution(self, imgArr, filters):
         outArr = np.zeros((len(filters),
@@ -70,9 +81,14 @@ class ConvNet(object):
 
         return np.maximum(zeroArr, imgArrs)
 
-    def forwardFCL(self, ):
-        
-        pass
+    def forwardFCL(self, imgArrs, weightsIn):
+        flattened = imgArrs.flatten()
+        outVals = np.dot(flattened, weightsIn)
+        return outVals
+
+    def sigmoidActiv(self, x):
+          return 1/(1+np.exp(-x))                         
+                                   
 
 cNet = ConvNet((100,150),(2,2), 1, 2,
                (2,2), 1,
