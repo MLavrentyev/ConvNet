@@ -19,24 +19,26 @@ class ConvNet(object):
         self.p1Shape = p1Shape
         self.p1Step = p1Step
 
+        self.p2Shape = p2Shape
+        self.p2Step = p2Step
+
     def forwardProp(self, imgArr):
         # imgArr - np array of size (d, w, h)
 
-        #Apply 1st convolution
         self.c1Out = self.forwardConvolution(imgArr, self.c1Filters)
-
-        #Apply 1st pooling
         self.p1Out = self.forwardPooling(self.c1Out, self.p1Shape, self.p1Step)
+        self.r1Out = self.applyReLU(self.p1Out)
+
+        self.c2Out = self.forwardConvolution(self.p1Out, self.c2Filters)
+        self.p2Out = self.forwardPooling(self.c2Out, self.p2Shape, self.p2Step)
+        self.r2Out = self.applyReLU(self.p2Out)
 
     def forwardConvolution(self, imgArr, filters):
         outArr = np.zeros((len(filters),
                                imgArr.shape[1], imgArr.shape[2]))
         for f in range(len(filters)):
             for channel in imgArr:
-                outArr[f] = ndimage.filters.convolve(channel,
-                                                         filters[f],
-                                                         mode='constant',
-                                                         cval=0.0)
+                outArr[f] = ndimage.filters.convolve(channel, filters[f], mode='constant', cval=0.0)
 
         return outArr
 
@@ -56,6 +58,11 @@ class ConvNet(object):
             outArr[ixmesh] = [[np.amax(imgArrs[chan, r:r+pShape[1], c:c+pShape[0]]) for c in xSpots] for r in ySpots]
 
         return outArr
+
+    def applyReLU(self, imgArrs):
+        zeroArr = np.zeros(imgArrs.shape)
+
+        return np.maximum(zeroArr, imgArrs)
 
 
 
