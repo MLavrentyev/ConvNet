@@ -37,8 +37,6 @@ class ConvNet(object):
         self.p1Out = self.forwardPooling(self.c1Out, self.p1Shape, self.p1Step)
         self.r1Out = self.applyReLU(self.p1Out)
 
-        print(self.r1Out)
-
         self.c2Out = self.forwardConvolution(self.p1Out, self.c2Filters)
         self.p2Out = self.forwardPooling(self.c2Out, self.p2Shape, self.p2Step)
         self.r2Out = self.applyReLU(self.p2Out)
@@ -47,6 +45,7 @@ class ConvNet(object):
         self.hActOut = self.sigmoidActiv(self.hOut)
         self.out = self.forwardFCL(self.hActOut, self.h_o_weights)
         self.actOut = self.sigmoidActiv(self.out)
+        print(self.actOut)
 
         return(self.actOut)
 
@@ -90,11 +89,11 @@ class ConvNet(object):
           return 1/(1+np.exp(-x))                         
                                    
 
-cNet = ConvNet((100,150),(2,2), 1, 2,
+cNet = ConvNet((2,3),(2,2), 1, 2,
                (2,2), 1,
                (2,2), 1, 1,
                (1,1), 1,
-               15, 4)
+               15, 1)
 imgArr = np.array([[[128., 140, 200],
                     [58, 78, 225],],
                    [[0, 0, 0],
