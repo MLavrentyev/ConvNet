@@ -15,7 +15,7 @@ def getTrainData(words, numImages):
         imS.downloadImages(word, numImages)
 
 
-getTrainData(["cat", "giraffe", "house", "tree"], 100)
+#getTrainData(["cat", "giraffe", "house", "tree"], 100)
 
 def importTrainData():
     imC = ImageConverter((150,100))
