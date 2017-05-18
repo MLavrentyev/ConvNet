@@ -22,36 +22,41 @@ class ConvNet(object):
     def forwardProp(self, imgArr):
         # imgArr - np array of size (d, w, h)
 
-        # Apply 1st convolution
-        self.c1Out = np.zeros((len(self.c1Filters),
-                               imgArr.shape[1], imgArr.shape[2]))
-        for f in range(len(self.c1Filters)):
-            for channel in imgArr:
-                self.c1Out[f] = ndimage.filters.convolve(channel,
-                                                         self.c1Filters[f],
-                                                         mode='constant',
-                                                         cval=0.0)
-        #End 1st Convolution
-        newSizes = (self.c1Out.shape[0],
-                    int((self.c1Out.shape[1]-self.p1Shape[0])/self.p1Step)+1,
-                    int((self.c1Out.shape[2]-self.p1Shape[1])/self.p1Step)+1)
+        #Apply 1st convolution
+        self.c1Out = self.forwardConvolution(imgArr, self.c1Filters)
 
         #Apply 1st pooling
-        self.p1Out = np.zeros(newSizes)
-        print(self.c1Out)
+        self.p1Out = self.forwardPooling(self.c1Out, self.p1Shape, self.p1Step)
+
+    def forwardConvolution(self, imgArr, filters):
+        outArr = np.zeros((len(filters),
+                               imgArr.shape[1], imgArr.shape[2]))
+        for f in range(len(filters)):
+            for channel in imgArr:
+                outArr[f] = ndimage.filters.convolve(channel,
+                                                         filters[f],
+                                                         mode='constant',
+                                                         cval=0.0)
+
+        return outArr
+
+    def forwardPooling(self, imgArrs, pShape, pStep):
+        newSizes = (imgArrs.shape[0],
+                    int((imgArrs.shape[1]-pShape[0])/pStep)+1,
+                    int((imgArrs.shape[2]-pShape[1])/pStep)+1)
+        
+        outArr = np.zeros(newSizes)
                                
-        ySpots = np.array([y for y in range(0, self.c1Out.shape[1]+1-self.p1Shape[0], self.p1Step)])
-        xSpots = np.array([x for x in range(0, self.c1Out.shape[2]+1-self.p1Shape[1], self.p1Step)])
-        print(xSpots, ySpots)
+        ySpots = np.array([y for y in range(0, imgArrs.shape[1]+1-pShape[0], pStep)])
+        xSpots = np.array([x for x in range(0, imgArrs.shape[2]+1-pShape[1], pStep)])
 
         for chan in range(newSizes[0]):
             ixmesh = np.ix_([chan], np.arange(len(ySpots)), np.arange(len(xSpots)))
             
-            self.p1Out[ixmesh] = [[np.amax(self.c1Out[chan, r:r+self.p1Shape[1], c:c+self.p1Shape[0]]) for c in xSpots] for r in ySpots]
+            outArr[ixmesh] = [[np.amax(imgArrs[chan, r:r+pShape[1], c:c+pShape[0]]) for c in xSpots] for r in ySpots]
 
-        print(self.p1Out)
+        return outArr
 
-            
 
 
 cNet = ConvNet((2,2), 1, 2,
