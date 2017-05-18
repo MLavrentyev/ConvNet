@@ -4,7 +4,7 @@ from skimage.measure import block_reduce
 
 class ConvNet(object):
 
-    def __init__(self, c1FiltShape, c1Step, c1NumFilts,
+    def __init__(self, imgShape, c1FiltShape, c1Step, c1NumFilts,
                  p1Shape, p1Step,
                  c2FiltShape, c2Step, c2NumFilts,
                  p2Shape, p2Step,
@@ -22,12 +22,18 @@ class ConvNet(object):
         self.p2Shape = p2Shape
         self.p2Step = p2Step
 
+        
+
+        
+
     def forwardProp(self, imgArr):
         # imgArr - np array of size (d, w, h)
 
         self.c1Out = self.forwardConvolution(imgArr, self.c1Filters)
         self.p1Out = self.forwardPooling(self.c1Out, self.p1Shape, self.p1Step)
         self.r1Out = self.applyReLU(self.p1Out)
+
+        print(self.r1Out)
 
         self.c2Out = self.forwardConvolution(self.p1Out, self.c2Filters)
         self.p2Out = self.forwardPooling(self.c2Out, self.p2Shape, self.p2Step)
@@ -38,7 +44,7 @@ class ConvNet(object):
                                imgArr.shape[1], imgArr.shape[2]))
         for f in range(len(filters)):
             for channel in imgArr:
-                outArr[f] = ndimage.filters.convolve(channel, filters[f], mode='constant', cval=0.0)
+                outArr[f] += ndimage.filters.convolve(channel, filters[f], mode='constant', cval=0.0)
 
         return outArr
 
@@ -64,17 +70,19 @@ class ConvNet(object):
 
         return np.maximum(zeroArr, imgArrs)
 
+    def forwardFCL(self, ):
+        
+        pass
 
-
-cNet = ConvNet((2,2), 1, 2,
+cNet = ConvNet((100,150),(2,2), 1, 2,
                (2,2), 1,
                (2,2), 1, 1,
                (1,1), 1,
                15, 4)
-imgArr = np.array([[[1., 2, 3],
-                    [4, 5, 6],],
+imgArr = np.array([[[128., 140, 200],
+                    [58, 78, 225],],
                    [[0, 0, 0],
                     [0, 0, 0],],
-                   [[2, 4, 6],
-                    [8, 10, 12]]])/20
+                   [[110, 58, 170],
+                    [200, 225, 255]]])/255
 cNet.forwardProp(imgArr)
