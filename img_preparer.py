@@ -17,6 +17,8 @@ class ImageConverter(object):
         if img.size != (self.imgWidth, self.imgHeight):
             img = img.resize((self.imgWidth, self.imgHeight), Image.LANCZOS)
 
+        img = img.convert(mode='RGB')
+        print(imgPath)
         rPix = np.array(list(img.getdata(band=0))).reshape(self.imgWidth,
                                                            self.imgHeight)
         gPix = np.array(list(img.getdata(band=1))).reshape(self.imgWidth,
