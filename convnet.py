@@ -5,9 +5,9 @@ from functools import reduce
 
 class ConvNet(object):
 
-    def __init__(self, imgShape, c1FiltShape, c1Step, c1NumFilts,
+    def __init__(self, imgShape, c1FiltShape, c1NumFilts,
                  p1Shape, p1Step,
-                 c2FiltShape, c2Step, c2NumFilts,
+                 c2FiltShape, c2NumFilts,
                  p2Shape, p2Step,
                  fcl1Size, outSize):
 
@@ -88,15 +88,3 @@ class ConvNet(object):
           return 1/(1+np.exp(-x))                         
                                    
 
-cNet = ConvNet((2,3),(2,2), 1, 2,
-               (2,2), 1,
-               (2,2), 1, 1,
-               (1,1), 1,
-               15, 1)
-imgArr = np.array([[[128., 140, 200],
-                    [58, 78, 225],],
-                   [[0, 0, 0],
-                    [0, 0, 0],],
-                   [[110, 58, 170],
-                    [200, 225, 255]]])/255
-cNet.forwardProp(imgArr)
