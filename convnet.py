@@ -5,7 +5,8 @@ from functools import reduce
 
 class ConvNet(object):
 
-    def __init__(self, imgShape, c1FiltShape, c1NumFilts,
+    def __init__(self, imgShape, numChannels,
+                 c1FiltShape, c1NumFilts,
                  p1Shape, p1Step,
                  c2FiltShape, c2NumFilts,
                  p2Shape, p2Step,
@@ -25,7 +26,8 @@ class ConvNet(object):
 
         size1 = (np.array(imgShape) - np.array(p1Shape))//p1Step+1
         size2 = (size1-np.array(p2Shape))//p2Step+1
-        self.c_h_weights = np.random.random((reduce(lambda x, y: x*y, size2), fcl1Size))*2-1
+
+        self.c_h_weights = np.random.random((np.prod(size2)*numChannels, fcl1Size))*2-1
         self.h_o_weights = np.random.random((fcl1Size, outSize))*2-1
 
         
