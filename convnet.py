@@ -25,8 +25,8 @@ class ConvNet(object):
 
         size1 = (np.array(imgShape) - np.array(p1Shape))//p1Step+1
         size2 = (size1-np.array(p2Shape))//p2Step+1
-        self.c_h_weights = np.random.random((reduce(lambda x, y: x*y, size2), fcl1Size))
-        self.h_o_weights = np.random.random((fcl1Size, outSize))
+        self.c_h_weights = np.random.random((reduce(lambda x, y: x*y, size2), fcl1Size))*2-1
+        self.h_o_weights = np.random.random((fcl1Size, outSize))*2-1
 
         
 
@@ -45,7 +45,6 @@ class ConvNet(object):
         self.hActOut = self.sigmoidActiv(self.hOut)
         self.out = self.forwardFCL(self.hActOut, self.h_o_weights)
         self.actOut = self.sigmoidActiv(self.out)
-        print(self.actOut)
 
         return(self.actOut)
 
