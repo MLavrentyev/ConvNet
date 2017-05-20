@@ -33,7 +33,7 @@ class ImageConverter(object):
     def prepImage(self, imgPath):
         img = Image.open(imgPath)
 
-        augmentedIms = self.createAdjustedImages
+        augmentedIms = self.createAdjustedImages(img)
         
         allIms = []
         for im in augmentedIms:
@@ -50,8 +50,8 @@ class ImageConverter(object):
         newData.append(img.rotate(180))
         newData.append(img.rotate(270))
 
-        for i in newData:
-            newData.append(i.crop((37, 25, 113, 75)).resize((150,100)))
+        #for i in newData:
+            #newData.append(i.crop((37, 25, 113, 75)).resize((150,100)))
 
         return newData
                            

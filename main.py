@@ -31,12 +31,14 @@ def importTrainData():
             for imgArr in toAdd:
                 allLabels.append(folder)
                 allImgs.append(imgArr)
+                print("added:" + str(len(allImgs)))
 
     return allImgs, allLabels
 
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
 
+print(trainData.shape)
 
 cNet = ConvNet((100,150), 3,
                (4,4), 3,
@@ -44,6 +46,6 @@ cNet = ConvNet((100,150), 3,
                (4,4), 3,
                (4,4), 4,
                20, 7)
-print(cNet.forwardProp(trainData[0]))
+#print(cNet.forwardProp(trainData[0]))
 
-print(trainLabels[0])
+#print(trainLabels[0])
