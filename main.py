@@ -26,9 +26,11 @@ def importTrainData():
     
     for folder in os.listdir("trainingData/"):
         for image in os.listdir("trainingData/" + folder):
-            allImgs.append(imC.prepImage("trainingData/" +
-                                              folder + "/" + image))
-            allLabels.append(folder)
+            toAdd = imC.prepImage("trainingData/" + folder + "/" + image)
+
+            for imgArr in toAdd:
+                allLabels.append(folder)
+                allImgs.append(imgArr)
 
     return allImgs, allLabels
 
