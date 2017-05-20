@@ -2,10 +2,10 @@
 This is a convolutional neural network application in Python for image classification. 
 
 ## Dependencies
-NumPy (latest)
-SciPy (latest)
-Scikit-Image (latest)
-Pillow (4.1.1 or 4.0.0, **not** 4.1.0)
+NumPy (latest)<br>
+SciPy (latest)<br>
+Scikit-Image (latest)<br> 
+Pillow (4.1.1 or 4.0.0, **not** 4.1.0)<br>
 
 
 ## Training Data
