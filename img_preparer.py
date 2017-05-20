@@ -10,9 +10,8 @@ class ImageConverter(object):
         self.imgHeight = imageSize[1]
         
 
-    def imageToNPArray(self, imgPath):
-        # imgPath - string path to the rgb image
-        img = Image.open(imgPath)
+    def imageToNPArray(self, img):
+        # img - PIL Image object
 
         if img.size != (self.imgWidth, self.imgHeight):
             img = img.resize((self.imgWidth, self.imgHeight), Image.LANCZOS)
@@ -36,3 +35,17 @@ class ImageConverter(object):
         scaledArr = self.scaleImage(arr)
 
         return scaledArr
+
+    def createAdjustedImages(self, img):
+        # Returns the original and various rotated and shifted copies.
+        newData = [img]
+
+        newData.append(img.rotate(90))
+        newData.append(img.rotate(180))
+        newData.append(img.rotate(270))
+
+        for i in newData:
+            newData.append(i.crop((37, 25, 113, 75)).resize((150,100)))
+
+        return newData
+                           
