@@ -31,10 +31,16 @@ class ImageConverter(object):
         return imgArr/255*2 - 1
 
     def prepImage(self, imgPath):
-        arr = self.imageToNPArray(imgPath)
-        scaledArr = self.scaleImage(arr)
+        img = Image.open(imgPath)
 
-        return scaledArr
+        augmentedIms = self.createAdjustedImages
+        
+        allIms = []
+        for im in augmentedIms:
+            arr = self.imageToNPArray(im)
+            allIms.append(self.scaleImage(arr))
+
+        return allIms
 
     def createAdjustedImages(self, img):
         # Returns the original and various rotated and shifted copies.
