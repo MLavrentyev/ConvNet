@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import ndimage
+from scipy import signal
 from skimage.measure import block_reduce
 from functools import reduce
 
@@ -11,6 +12,8 @@ class ConvNet(object):
                  c2FiltShape, c2NumFilts,
                  p2Shape, p2Step,
                  fcl1Size, outSize):
+
+        self.inImgShape = imgShape
 
         self.c1Filters = [np.random.random(c1FiltShape)*2-1
                           for x in range(c1NumFilts)]
