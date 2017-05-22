@@ -87,6 +87,14 @@ class ConvNet(object):
         return outVals
 
     def sigmoidActiv(self, x):
-          return 1/(1+np.exp(-x))                         
+          return 1/(1+np.exp(-x))
+
+    def backProp(self, outputs, rOutputs):
+        # outputs is the network prediction
+        # rOutputs is the actual outputs (from data labels)
+        pass
+
+    def calcSquaredError(output, rOutput):
+        return np.sum(0.5*(np.power(rOutput - output), 2))
                                    
 
