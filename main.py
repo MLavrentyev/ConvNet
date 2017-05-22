@@ -32,7 +32,10 @@ def importTrainData():
             toAdd = imC.prepImage("trainingData/" + folder + "/" + image)
 
             for imgArr in toAdd:
-                allLabels.append(labelToNum.index(folder))
+                newLabel = np.zeros(7)
+                newLabel[labelToNum.index(folder)] = 1
+                
+                allLabels.append(newLabel)
                 allImgs.append(imgArr)
 
     print("Images Loaded")
@@ -41,7 +44,7 @@ def importTrainData():
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
 
-print(trainLabels)
+print(trainLabels[5])
 
 print(trainData.shape)
 
