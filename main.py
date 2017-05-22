@@ -51,6 +51,8 @@ cNet = ConvNet((100,150), 3,
                (4,4), 3,
                (4,4), 4,
                20, 7)
-#print(cNet.forwardProp(trainData[0]))
+outArr = cNet.forwardProp(trainData[0])
+error = cNet.calcSquaredError(outArr, trainLabels[0])
 
-#print(trainLabels[0])
+print(error)
+

@@ -94,7 +94,7 @@ class ConvNet(object):
         # rOutputs is the actual outputs (from data labels)
         pass
 
-    def calcSquaredError(output, rOutput):
-        return np.sum(0.5*(np.power(rOutput - output), 2))
+    def calcSquaredError(self, output, rOutput):
+        return np.sum(0.5 * np.power(rOutput - output, 2))
                                    
 
