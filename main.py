@@ -3,6 +3,7 @@ from img_preparer import ImageConverter
 from convnet import ConvNet
 import os
 import numpy as np
+import time
 
 
 def getTrainData(words, numImages):
@@ -41,9 +42,10 @@ def importTrainData():
     print("Images Loaded")
     return allImgs, allLabels
 
+sL = time.time()
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
-
+print("Loading took: " + str(time.time()-sL) + " seconds")
 
 cNet = ConvNet((100,150), 3,
                (4,4), 3,
@@ -51,8 +53,10 @@ cNet = ConvNet((100,150), 3,
                (4,4), 3,
                (4,4), 4,
                20, 7)
+sF = time.time()
 outArr = cNet.forwardProp(trainData[0])
 error = cNet.calcSquaredError(outArr, trainLabels[0])
 
-print(error)
+print("Error: " + str(error))
 
+print("Forward Prop took: " + str(time.time()-sF) + " seconds")
