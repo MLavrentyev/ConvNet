@@ -44,9 +44,6 @@ def importTrainData():
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
 
-print(trainLabels[5])
-
-print(trainData.shape)
 
 cNet = ConvNet((100,150), 3,
                (4,4), 3,
