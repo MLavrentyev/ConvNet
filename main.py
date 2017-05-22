@@ -19,6 +19,9 @@ def getTrainData(words, numImages):
 
 def importTrainData():
     imC = ImageConverter((150,100))
+
+    labelToNum = ["cat", "giraffe", "house", "lollipop", "shoes",
+                  "stop sign", "tree"]
     
     allImgs = []
     allLabels = []
@@ -29,14 +32,16 @@ def importTrainData():
             toAdd = imC.prepImage("trainingData/" + folder + "/" + image)
 
             for imgArr in toAdd:
-                allLabels.append(folder)
+                allLabels.append(labelToNum.index(folder))
                 allImgs.append(imgArr)
-                print("added:" + str(len(allImgs)))
 
+    print("Images Loaded")
     return allImgs, allLabels
 
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
+
+print(trainLabels)
 
 print(trainData.shape)
 
