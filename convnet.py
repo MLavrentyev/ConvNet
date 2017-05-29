@@ -1,6 +1,5 @@
 import numpy as np
 from scipy import ndimage
-from scipy import signal
 from skimage.measure import block_reduce
 from functools import reduce
 
@@ -33,6 +32,9 @@ class ConvNet(object):
         self.c_h_weights = np.random.random((np.prod(size2)*numChannels, fcl1Size))*2-1
         self.h_o_weights = np.random.random((fcl1Size, outSize))*2-1
 
+        self.preFclSize = size2*numChannels
+        self.fc1Size = fcl1Size
+        self.outSize = outSize
         
 
     def forwardProp(self, imgArr):
@@ -54,8 +56,8 @@ class ConvNet(object):
         return(self.actOut)
 
     def forwardConvolution(self, imgArr, filters):
-        outArr = np.zeros((len(filters),
-                               imgArr.shape[1], imgArr.shape[2]))
+        outArr = np.zeros((len(filters), imgArr.shape[1], imgArr.shape[2]))
+        
         for f in range(len(filters)):
             for channel in imgArr:
                 outArr[f] += ndimage.filters.convolve(channel, filters[f], mode='constant', cval=0.0)
@@ -92,12 +94,22 @@ class ConvNet(object):
     def sigmoidActiv(self, x):
           return 1/(1+np.exp(-x))
 
-    def backProp(self, outputs, rOutputs):
-        # outputs is the network prediction
-        # rOutputs is the actual outputs (from data labels)
-        pass
-
     def calcSquaredError(self, output, rOutput):
         return np.sum(0.5 * np.power(rOutput - output, 2))
+
+    def backProp(self, inDatum, rOut):
+        # inDatum is the in data for the network (1 p.)
+        # rOut is the out data for the netowrk (1 p.)
+
+        nOut = self.forwardProp(inDatum)
+        print(nOut)
+        print(rOut)
+        # Calculate gradient with weights of 1st FCL
+        dC_dfcl_w2 = np.zeros(self.h_o_weights.shape)
+        for o in range(self.outSize):
+            dC_dfcl_w2[:,o] = np.multiply((nOut[o]-rOut[o])*nOut[o]*(1-nOut[o]), self.hActOut)
+        print(dC_dfcl_w2)
+
+    
                                    
 
