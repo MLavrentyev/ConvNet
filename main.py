@@ -42,6 +42,7 @@ def importTrainData():
     print("Images Loaded")
     return allImgs, allLabels
 
+
 sL = time.time()
 trainData, trainLabels = importTrainData()
 trainData = np.array(trainData)
@@ -52,11 +53,8 @@ cNet = ConvNet((100,150), 3,
                (3,3), 3,
                (4,4), 3,
                (4,4), 4,
-               20, 7)
-sF = time.time()
-outArr = cNet.forwardProp(trainData[0])
-error = cNet.calcSquaredError(outArr, trainLabels[0])
+               5, 7)
 
-print("Error: " + str(error))
 
-print("Forward Prop took: " + str(time.time()-sF) + " seconds")
+cNet.backProp(trainData[0], trainLabels[0])
+
