@@ -33,7 +33,7 @@ class ConvNet(object):
         self.h_o_weights = np.random.random((fcl1Size, outSize))*2-1
 
         self.preFclSize = size2*numChannels
-        self.fc1Size = fcl1Size
+        self.fcl1Size = fcl1Size
         self.outSize = outSize
         
 
@@ -102,14 +102,19 @@ class ConvNet(object):
         # rOut is the out data for the netowrk (1 p.)
 
         nOut = self.forwardProp(inDatum)
-        print(nOut)
-        print(rOut)
-        # Calculate gradient with weights of 1st FCL
+
+        
+        # Calculate gradient with weights of 1st FCL --> out
         dC_dfcl_w2 = np.zeros(self.h_o_weights.shape)
         for o in range(self.outSize):
             dC_dfcl_w2[:,o] = np.multiply((nOut[o]-rOut[o])*nOut[o]*(1-nOut[o]), self.hActOut)
-        print(dC_dfcl_w2)
+            #TODO: calculate deltas
 
+
+        # Calculate gradient with weights of finLayer --> 1st FCL
+        dC_dfcl_w1 = np.zeros(self.c_h_weights.shape)
+        for h in range(self.fcl1Size):
+            dC_dfcl_w1[:,h] = np.multiply()#TODO: Finish this
     
                                    
 
