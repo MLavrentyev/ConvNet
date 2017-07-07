@@ -1,9 +1,9 @@
 from image_scraper import ImageScraper
 from img_preparer import ImageConverter
-from convnet import ConvNet
 import os
 import numpy as np
 import time
+import tensorflow as tf
 
 
 def getTrainData(words, numImages):
@@ -23,11 +23,11 @@ def importTrainData():
 
     labelToNum = ["cat", "giraffe", "house", "lollipop", "shoes",
                   "stop sign", "tree"]
-    
+
     allImgs = []
     allLabels = []
     #labels and images will be aligned
-    
+
     for folder in os.listdir("trainingData/"):
         for image in os.listdir("trainingData/" + folder):
             toAdd = imC.prepImage("trainingData/" + folder + "/" + image)
@@ -35,7 +35,7 @@ def importTrainData():
             for imgArr in toAdd:
                 newLabel = np.zeros(7)
                 newLabel[labelToNum.index(folder)] = 1
-                
+
                 allLabels.append(newLabel)
                 allImgs.append(imgArr)
 
@@ -43,18 +43,4 @@ def importTrainData():
     return allImgs, allLabels
 
 
-sL = time.time()
-trainData, trainLabels = importTrainData()
-trainData = np.array(trainData)
-print("Loading took: " + str(time.time()-sL) + " seconds")
-
-cNet = ConvNet((100,150), 3,
-               (4,4), 3,
-               (3,3), 3,
-               (4,4), 3,
-               (4,4), 4,
-               5, 7)
-
-
-cNet.backProp(trainData[0], trainLabels[0])
-
+getTrainData(["cat", "tree", "lolipop", "house", "shoes", "airplane"], 200)
