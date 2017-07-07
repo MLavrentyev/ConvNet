@@ -17,7 +17,7 @@ class ImageScraper(object):
                        "safe": "medium",
                        "key": apiKey}
 
-    def sendRequest(self, query, numImages):
+    def sendRequest(self, query, numImages, start=0):
         # query - string the query to be sent in the Custom Search
         # numImages - int number of images to return, rounded down to nearest 10
 
@@ -25,7 +25,7 @@ class ImageScraper(object):
         self.params["cx"] = "002614461317739606024:pdrv0eu2ihq"
 
         imageLinks = []
-        for i in range(int(numImages/10)):
+        for i in range(start, start + int(numImages/10)):
             self.params["start"] = i+1
 
             response = requests.get(self.baseUrl, params=self.params).content
@@ -34,7 +34,7 @@ class ImageScraper(object):
             if "error" in response:
                 print("The API request has encountered an error: " +
                       response["error"]["errors"][0]["reason"])
-                return
+                return imageLinks
                 
             
             imageLinks.extend([val["image"]["thumbnailLink"]
@@ -55,6 +55,10 @@ class ImageScraper(object):
             os.makedirs("trainingData/" + word)
         
         for i in range(len(links)):
-            urllib.request.urlretrieve(links[i], "trainingData/" + word + \
-                                       "/" + "img" + str(i) + ".png")
-        
+            name = "img"
+            new_name = name
+            n = 0
+            while os.path.exists("trainingData/" + word + "/" + new_name + ".png"):
+                new_name = name + str(n)
+                n += 1
+            urllib.request.urlretrieve(links[i], "trainingData/" + word + "/" +  new_name + ".png")
