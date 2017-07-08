@@ -114,7 +114,7 @@ def main(unused_argv):
     test_data = mnist.test.images
     test_labels = np.asarray(mnist.test.labels, dtype=np.int32)
 
-    mnist_classifier = SKCompat(learn.Estimator(model_fn=cnn_function, model_dir="models/mnist_cnn"))
+    mnist_classifier = SKCompat(learn.Estimator(model_fn=cnn_function, model_dir="models/mnist_cnn/"))
 
     tensors_to_log = {}
     logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=100)
@@ -122,15 +122,15 @@ def main(unused_argv):
     mnist_classifier.fit(x=train_data,
                          y=train_labels,
                          batch_size=100,
-                         steps=20000,
+                         steps=10000,
                          monitors=[logging_hook])
 
     metrics = {
         "accuracy": learn.MetricSpec(metric_fn=tf.metrics.accuracy, prediction_key="classes"),
     }
-    eval_results = mnist_classifier.evaluate(x=test_data,
-                                             y=test_labels,
-                                             metrics=metrics)
+    eval_results = mnist_classifier.score(x=test_data,
+                                          y=test_labels,
+                                          metrics=metrics)
     print(eval_results)
 
 
