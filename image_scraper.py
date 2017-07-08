@@ -1,63 +1,65 @@
 import requests
 import json
-import urllib.request
+import urllib
 import os
+import math
 
 class ImageScraper(object):
 
     def __init__(self, apiKey):
         
-        self.baseUrl = "https://www.googleapis.com/customsearch/v1"
+        self.baseUrl = "https://pixabay.com/api/"
         self.apiKey = apiKey
-
-        self.params = {"searchType": "image",
-                       "imgColorType": "color",
-                       "imgType": "photo",
-                       "filter": "0",
-                       "safe": "medium",
-                       "key": apiKey}
+        self.per_page = 20
+        self.params = {"lang": "en",
+                       "image_type": "photo",
+                       "orientation": "horizontal",
+                       "per_page": self.per_page,
+                       "safesearch": "true",
+                       }
 
     def sendRequest(self, query, numImages, start=0):
         # query - string the query to be sent in the Custom Search
-        # numImages - int number of images to return, rounded down to nearest 10
+        # numImages - int number of images to return, rounded up to nearest <self.per_page>
 
-        self.params["q"] = query
-        self.params["cx"] = "002614461317739606024:pdrv0eu2ihq"
+        start = math.ceil(start/self.per_page)
+
+        self.params["key"] = self.apiKey
+        self.params["q"] = urllib.parse.quote_plus(query, safe="")
 
         imageLinks = []
-        for i in range(start, start + int(numImages/10)):
-            self.params["start"] = i+1
+        for i in range(start, start + math.ceil(numImages/self.per_page)):
+            self.params["page"] = i + 1
+            print(i+1)
 
-            response = requests.get(self.baseUrl, params=self.params).content
-            response = json.loads(response)
-
-            if "error" in response:
-                print("The API request has encountered an error: " +
-                      response["error"]["errors"][0]["reason"])
+            response = requests.get(self.baseUrl, params=self.params)
+            print(response.headers)
+            if response.status_code != requests.codes.ok:
+                print("The API request has encountered an error: " + str(response.status_code))
                 return imageLinks
-                
-            
-            imageLinks.extend([val["image"]["thumbnailLink"]
-                          for val in response["items"]])
+
+            response = json.loads(response.content)
+            print(response)
+            imageLinks.extend([item["previewURL"] for item in response["hits"]])
         # end loop
         
         return imageLinks
 
-    def downloadImages(self, word, numImages):
+    def downloadImages(self, word, numImages, start=0):
         # params - see sendRequest()
 
-        links = self.sendRequest(word, numImages)
+        links = self.sendRequest(word, numImages, start=start)
 
         if links is None:
             return
-        
+
         if not os.path.exists("trainingData/" + word):
             os.makedirs("trainingData/" + word)
         
         for i in range(len(links)):
             name = "img"
-            new_name = name
             n = 0
+            new_name = name + str(n)
             while os.path.exists("trainingData/" + word + "/" + new_name + ".png"):
                 new_name = name + str(n)
                 n += 1
