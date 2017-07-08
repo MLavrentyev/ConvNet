@@ -6,6 +6,9 @@ import time
 import tensorflow as tf
 from tensorflow.contrib import learn
 from tensorflow.contrib.learn.python.learn.estimators import model_fn as model_fn_lib
+from tensorflow.contrib.learn.python import SKCompat
+
+tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def getTrainData(words, numImages):
@@ -49,16 +52,16 @@ def importTrainData(categories):
 
 
 def cnn_function(features, labels, mode):
-    input_layer = tf.reshape(features, [-1, 100, 150, 3])
+    input_layer = tf.reshape(features, [-1, 28, 28, 1])
 
     cnn_layer1 = tf.layers.conv2d(input_layer,
                                   20,
-                                  (10, 10),
+                                  (5, 5),
                                   padding="same",
                                   name="Conv1",
                                   activation=tf.nn.relu)
     pool_layer1 = tf.layers.max_pooling2d(cnn_layer1,
-                                          (4, 4), 4,
+                                          (2, 2), 2,
                                           name="Pool1",)
 
     cnn_layer2 = tf.layers.conv2d(pool_layer1,
@@ -68,23 +71,18 @@ def cnn_function(features, labels, mode):
                                   name="Conv2",
                                   activation=tf.nn.relu)
     pool_layer2 = tf.layers.max_pooling2d(cnn_layer2,
-                                          (2, 2), 2,
+                                          pool_size=(2, 2),
+                                          strides=2,
                                           name="Pool2",)
 
-    cnn_layer3 = tf.layers.conv2d(pool_layer2,
-                                  40,
-                                  (4, 4),
-                                  padding="same",
-                                  name="Conv3",)
-    pool_layer3 = tf.layers.max_pooling2d(cnn_layer3,
-                                          (2, 2), 2,
-                                          name="Pool3",)
-    flat_pool3 = tf.reshape(pool_layer3, [-1, 7 * 10 * 40])
+    flat_pool3 = tf.reshape(pool_layer2, [-1, 7*7*40])
     dense_layer = tf.layers.dense(flat_pool3,
                                   units=1024,
                                   activation=tf.nn.relu)
     logits = tf.layers.dense(dense_layer,
-                             units=2)
+                             units=10)
+    print(logits.get_shape())
+    print(labels.get_shape())
 
     # Finish network architechture
 
@@ -92,7 +90,8 @@ def cnn_function(features, labels, mode):
     train_op = None
 
     if mode != learn.ModeKeys.INFER:
-        loss = tf.losses.softmax_cross_entropy(onehot_labels=labels,
+        onehot_labels = tf.one_hot(tf.cast(labels, tf.int32), 10)
+        loss = tf.losses.softmax_cross_entropy(onehot_labels=onehot_labels,
                                                logits=logits)
     if mode == learn.ModeKeys.TRAIN:
         train_op = tf.contrib.layers.optimize_loss(loss=loss,
@@ -100,14 +99,14 @@ def cnn_function(features, labels, mode):
                                                    learning_rate=0.01,
                                                    optimizer="SGD")
     predictions = {
-        "classes": tf.argmax(input=logits, axis=1)
-        "probabilities": tf.nn.softmax(logits, name="softmax_tensor")
+        "classes": tf.argmax(input=logits, axis=1),
+        "probabilities": tf.nn.softmax(logits, name="softmax_tensor"),
     }
 
     return model_fn_lib.ModelFnOps(mode=mode, predictions=predictions, loss=loss, train_op=train_op)
 
 
-def main():
+def main(unused_argv):
     mnist = learn.datasets.load_dataset("mnist")
     train_data = mnist.train.images
     train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
@@ -115,22 +114,25 @@ def main():
     test_data = mnist.test.images
     test_labels = np.asarray(mnist.test.labels, dtype=np.int32)
 
-    mnist_classifier = learn.Estimator(model_fn=cnn_function, model_dir="models/mnist_cnn")
+    mnist_classifier = SKCompat(learn.Estimator(model_fn=cnn_function, model_dir="models/mnist_cnn"))
 
-    tensors_to_log = {"probabilities": "softmax_tensor"}
-    logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
+    tensors_to_log = {}
+    logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=100)
 
     mnist_classifier.fit(x=train_data,
                          y=train_labels,
-                         batch_size=50,
-                         steps=40000,
+                         batch_size=100,
+                         steps=20000,
                          monitors=[logging_hook])
+
+    metrics = {
+        "accuracy": learn.MetricSpec(metric_fn=tf.metrics.accuracy, prediction_key="classes"),
+    }
+    eval_results = mnist_classifier.evaluate(x=test_data,
+                                             y=test_labels,
+                                             metrics=metrics)
+    print(eval_results)
 
 
 if __name__ == "__main__":
-    #Get training data from Google
-    #getTrainData(["school+bus"], 600)
-
-    # Import trianing data into programa
-    #trainImgs, trainLabels = importTrainData(["cat" "tree", "lolipop", "house", "shoes", "airplane"])
-    #print trainLabels
+    tf.app.run()
