@@ -4,9 +4,8 @@ import os
 import numpy as np
 import time
 import tensorflow as tf
-from tensorflow.contrib import learn
-from tensorflow.contrib.learn.python.learn.estimators import model_fn as model_fn_lib
-from tensorflow.contrib.learn.python import SKCompat
+from tensorflow.examples.tutorials.mnist import input_data
+
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -51,87 +50,78 @@ def importTrainData(categories):
     return allImgs, allLabels
 
 
-def cnn_function(features, labels, mode):
-    input_layer = tf.reshape(features, [-1, 28, 28, 1])
+# ------------Neural Net Stuff-----------------------
 
-    cnn_layer1 = tf.layers.conv2d(input_layer,
-                                  20,
-                                  (5, 5),
-                                  padding="same",
-                                  name="Conv1",
-                                  activation=tf.nn.relu)
-    pool_layer1 = tf.layers.max_pooling2d(cnn_layer1,
-                                          (2, 2), 2,
-                                          name="Pool1",)
+def conv_layer(input, channels_in, channels_out):
+    W = tf.Variable(tf.random_uniform([5, 5, channels_in, channels_out]))
+    b = tf.Variable(tf.constant(0.1, shape=[channels_out]))
+    conv = tf.nn.conv2d(input, W, strides=[1, 1, 1, 1], padding="SAME")
+    activation = tf.nn.relu(conv + b)
 
-    cnn_layer2 = tf.layers.conv2d(pool_layer1,
-                                  40,
-                                  (5, 5),
-                                  padding="same",
-                                  name="Conv2",
-                                  activation=tf.nn.relu)
-    pool_layer2 = tf.layers.max_pooling2d(cnn_layer2,
-                                          pool_size=(2, 2),
-                                          strides=2,
-                                          name="Pool2",)
+    return activation
 
-    flat_pool3 = tf.reshape(pool_layer2, [-1, 7*7*40])
-    dense_layer = tf.layers.dense(flat_pool3,
-                                  units=1024,
-                                  activation=tf.nn.relu)
-    logits = tf.layers.dense(dense_layer,
-                             units=10)
-    print(logits.get_shape())
-    print(labels.get_shape())
 
-    # Finish network architechture
+def fc_layer(input, channels_in, channels_out):
+    W = tf.Variable(tf.random_uniform([channels_in, channels_out]))
+    b = tf.Variable(tf.constant(0.1, shape=[channels_out]))
+    ff = tf.matmul(input, W) + b
+    activation = tf.nn.relu(ff)
 
-    loss = None
-    train_op = None
+    return activation
 
-    if mode != learn.ModeKeys.INFER:
-        onehot_labels = tf.one_hot(tf.cast(labels, tf.int32), 10)
-        loss = tf.losses.softmax_cross_entropy(onehot_labels=onehot_labels,
-                                               logits=logits)
-    if mode == learn.ModeKeys.TRAIN:
-        train_op = tf.contrib.layers.optimize_loss(loss=loss,
-                                                   global_step=tf.contrib.framework.get_global_step(),
-                                                   learning_rate=0.01,
-                                                   optimizer="SGD")
-    predictions = {
-        "classes": tf.argmax(input=logits, axis=1),
-        "probabilities": tf.nn.softmax(logits, name="softmax_tensor"),
-    }
 
-    return model_fn_lib.ModelFnOps(mode=mode, predictions=predictions, loss=loss, train_op=train_op)
+def cnn_function(x, y):
+    x_2d_img = tf.reshape(x, [-1, 28, 28, 1])
+
+    with tf.variable_scope("conv1"):
+        conv1 = conv_layer(x_2d_img, 1, 20)
+        pool1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+
+    with tf.variable_scope("conv2"):
+        conv2 = conv_layer(pool1, 20, 40)
+        pool2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+        flattened = tf.reshape(pool2, [-1, 7*7*40])
+
+    fcl1 = fc_layer(flattened, 7*7*40, 1024)
+    fcl2 = fc_layer(fcl1, 1024, 512)
+    logits = fc_layer(fcl2, 512, 10)
+
+    return logits
 
 
 def main(unused_argv):
-    mnist = learn.datasets.load_dataset("mnist")
-    train_data = mnist.train.images
-    train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
+    sess = tf.Session()
 
-    test_data = mnist.test.images
-    test_labels = np.asarray(mnist.test.labels, dtype=np.int32)
+    # Load dataset
+    mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
-    mnist_classifier = SKCompat(learn.Estimator(model_fn=cnn_function, model_dir="models/mnist_cnn/"))
+    x = tf.placeholder(tf.float32, shape=[None, 28 * 28])
+    y = tf.placeholder(tf.float32, shape=[None, 10])
 
-    tensors_to_log = {}
-    logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=100)
+    # Create network
+    logits = cnn_function(x, y)
+    cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y))
+    train_step = tf.train.GradientDescentOptimizer(1e-4).minimize(cross_entropy)
+    correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(y, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-    mnist_classifier.fit(x=train_data,
-                         y=train_labels,
-                         batch_size=100,
-                         steps=10000,
-                         monitors=[logging_hook])
+    # Initialize variables
+    sess.run(tf.global_variables_initializer())
 
-    metrics = {
-        "accuracy": learn.MetricSpec(metric_fn=tf.metrics.accuracy, prediction_key="classes"),
-    }
-    eval_results = mnist_classifier.score(x=test_data,
-                                          y=test_labels,
-                                          metrics=metrics)
-    print(eval_results)
+    writer = tf.summary.FileWriter("tmp/mnist_demo/1")
+    writer.add_graph(sess.graph)
+
+    # Train
+    for i in range(2000):
+        batch = mnist.train.next_batch(100)
+
+        # Report accuracy every 100 steps
+        if i%100 == 0:
+            [train_accuracy] = sess.run([accuracy], feed_dict={x: batch[0], y:batch[1]})
+            print("Step: %d, Training accuracy: %d" % (i, train_accuracy))
+
+        # Run training step
+        sess.run(train_step, feed_dict={x: batch[0], y: batch[1]})
 
 
 if __name__ == "__main__":
