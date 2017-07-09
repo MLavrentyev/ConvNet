@@ -52,39 +52,39 @@ def importTrainData(categories):
 
 # ------------Neural Net Stuff-----------------------
 
-def conv_layer(input, channels_in, channels_out):
-    W = tf.Variable(tf.random_uniform([5, 5, channels_in, channels_out]))
-    b = tf.Variable(tf.constant(0.1, shape=[channels_out]))
-    conv = tf.nn.conv2d(input, W, strides=[1, 1, 1, 1], padding="SAME")
-    activation = tf.nn.relu(conv + b)
+def conv_layer(input, channels_in, channels_out, name="conv"):
+    with tf.name_scope(name):
+        W = tf.Variable(tf.random_uniform([5, 5, channels_in, channels_out]))
+        b = tf.Variable(tf.constant(0.1, shape=[channels_out]))
+        conv = tf.nn.conv2d(input, W, strides=[1, 1, 1, 1], padding="SAME")
+        activation = tf.nn.relu(conv + b)
 
-    return activation
+        return activation
 
 
-def fc_layer(input, channels_in, channels_out):
-    W = tf.Variable(tf.random_uniform([channels_in, channels_out]))
-    b = tf.Variable(tf.constant(0.1, shape=[channels_out]))
-    ff = tf.matmul(input, W) + b
-    activation = tf.nn.relu(ff)
+def fc_layer(input, channels_in, channels_out, name="fcl"):
+    with tf.name_scope(name):
+        W = tf.Variable(tf.random_uniform([channels_in, channels_out]), name="W")
+        b = tf.Variable(tf.constant(0.1, shape=[channels_out]), name="b")
+        ff = tf.matmul(input, W) + b
+        activation = tf.nn.relu(ff)
 
-    return activation
+        return activation
 
 
 def cnn_function(x, y):
     x_2d_img = tf.reshape(x, [-1, 28, 28, 1])
 
-    with tf.variable_scope("conv1"):
-        conv1 = conv_layer(x_2d_img, 1, 20)
-        pool1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+    conv1 = conv_layer(x_2d_img, 1, 20, name="conv1")
+    pool1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
 
-    with tf.variable_scope("conv2"):
-        conv2 = conv_layer(pool1, 20, 40)
-        pool2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
-        flattened = tf.reshape(pool2, [-1, 7*7*40])
+    conv2 = conv_layer(pool1, 20, 40, name="conv2")
+    pool2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+    flattened = tf.reshape(pool2, [-1, 7*7*40])
 
-    fcl1 = fc_layer(flattened, 7*7*40, 1024)
-    fcl2 = fc_layer(fcl1, 1024, 512)
-    logits = fc_layer(fcl2, 512, 10)
+    fcl1 = fc_layer(flattened, 7*7*40, 1024, name="fcl1")
+    fcl2 = fc_layer(fcl1, 1024, 512, name="fcl2")
+    logits = fc_layer(fcl2, 512, 10, name="logits")
 
     return logits
 
@@ -95,20 +95,22 @@ def main(unused_argv):
     # Load dataset
     mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
-    x = tf.placeholder(tf.float32, shape=[None, 28 * 28])
-    y = tf.placeholder(tf.float32, shape=[None, 10])
+    x = tf.placeholder(tf.float32, shape=[None, 28 * 28], name="x")
+    y = tf.placeholder(tf.float32, shape=[None, 10], name="labels")
 
     # Create network
     logits = cnn_function(x, y)
-    cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y))
-    train_step = tf.train.GradientDescentOptimizer(1e-4).minimize(cross_entropy)
-    correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(y, 1))
+    with tf.name_scope("xent"):
+        cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y))
+    with tf.name_scope("train"):
+        train_step = tf.train.GradientDescentOptimizer(1e-4).minimize(cross_entropy)
+    with tf.name_scope("accuracy"):
+        correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(y, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
     # Initialize variables
     sess.run(tf.global_variables_initializer())
 
-    writer = tf.summary.FileWriter("tmp/mnist_demo/1")
+    writer = tf.summary.FileWriter("tmp/mnist_demo/2")
     writer.add_graph(sess.graph)
 
     # Train
