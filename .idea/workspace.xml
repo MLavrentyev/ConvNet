@@ -2,32 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="952a4308-f89f-48d4-8814-a6c9c1caeeb6" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MNIST-data/t10k-images-idx3-ubyte.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MNIST-data/t10k-labels-idx1-ubyte.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MNIST-data/train-images-idx3-ubyte.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/MNIST-data/train-labels-idx1-ubyte.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/Quick access - Shortcut.lnk" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/checkpoint" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/eval_score/events.out.tfevents.1499550979.MLAVRENTYEV" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/eval_score/events.out.tfevents.1499555967.MLAVRENTYEV" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/events.out.tfevents.1499542037.MLAVRENTYEV" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/events.out.tfevents.1499554089.MLAVRENTYEV" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/graph.pbtxt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-20001.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-20001.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-20001.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-23235.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-23235.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-23235.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-26479.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-26479.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-26479.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-29631.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-29631.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-29631.meta" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-30000.data-00000-of-00001" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-30000.index" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/models/mnist_cnn/model.ckpt-30000.meta" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.data-00000-of-00001" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.index" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.meta" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/checkpoint" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
@@ -50,14 +28,14 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="120" column="9" lean-forward="false" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
+            <state relative-caret-position="348">
+              <caret line="132" column="22" lean-forward="true" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
                 <element signature="e#289#840#0" expanded="false" />
                 <element signature="e#880#1451#0" expanded="false" />
-                <element signature="e#1880#2091#0" expanded="false" />
-                <element signature="e#2122#2708#0" expanded="false" />
+                <element signature="e#2101#2396#0" expanded="false" />
+                <element signature="e#2427#2939#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -345,14 +323,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15104167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18331504" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22832052" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28320527" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -371,7 +349,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -384,8 +362,8 @@
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#1880#2091#0" expanded="false" />
-            <element signature="e#2122#2708#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -409,8 +387,8 @@
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#1880#2091#0" expanded="false" />
-            <element signature="e#2122#2708#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -434,8 +412,8 @@
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#1880#2091#0" expanded="false" />
-            <element signature="e#2122#2708#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -459,8 +437,8 @@
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#1880#2091#0" expanded="false" />
-            <element signature="e#2122#2708#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -496,14 +474,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="120" column="9" lean-forward="false" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
+        <state relative-caret-position="348">
+          <caret line="132" column="22" lean-forward="true" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#1880#2091#0" expanded="false" />
-            <element signature="e#2122#2708#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
