@@ -115,15 +115,15 @@ def main(unused_argv):
     # Initialize variables and tensorboard summaries
     sess.run(tf.global_variables_initializer())
 
-    writer = tf.summary.FileWriter("tmp/mnist_demo/6")
+    writer = tf.summary.FileWriter("tensorboard/mnist_demo/7")
     writer.add_graph(sess.graph)
     merged_summary = tf.summary.merge_all()
 
     # Create a saver to save the trained model
-    saver = tf.train.Saver(keep_checkpoint_every_n_hours=0.25,
+    saver = tf.train.Saver(max_to_keep=5,
                            name="MNIST_set")
     # Train
-    for i in range(5000):
+    for i in range(2500):
         batch = mnist.train.next_batch(100)
 
         # Report accuracy every 100 steps
