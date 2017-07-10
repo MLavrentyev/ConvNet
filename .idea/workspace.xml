@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="952a4308-f89f-48d4-8814-a6c9c1caeeb6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.data-00000-of-00001" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.index" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/mnist.meta" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/trained_models/checkpoint" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/1/events.out.tfevents.1499614823.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/2/events.out.tfevents.1499617821.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/3/events.out.tfevents.1499618732.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/4/events.out.tfevents.1499619543.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/5/events.out.tfevents.1499621775.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tmp/mnist_demo/6/events.out.tfevents.1499623420.MLAVRENTYEV" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trained_models/mnist.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trained_models/mnist.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/trained_models/mnist.meta" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trained_models/checkpoint" afterPath="$PROJECT_DIR$/trained_models/checkpoint" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,14 +34,13 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="132" column="22" lean-forward="true" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
+            <state relative-caret-position="334">
+              <caret line="117" column="47" lean-forward="false" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
                 <element signature="e#289#840#0" expanded="false" />
                 <element signature="e#880#1451#0" expanded="false" />
                 <element signature="e#2101#2396#0" expanded="false" />
-                <element signature="e#2427#2939#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -113,7 +118,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -128,7 +133,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -323,14 +328,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15104167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18331504" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28320527" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28320527" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -363,7 +368,6 @@
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
             <element signature="e#2101#2396#0" expanded="false" />
-            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -388,7 +392,6 @@
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
             <element signature="e#2101#2396#0" expanded="false" />
-            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -413,7 +416,6 @@
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
             <element signature="e#2101#2396#0" expanded="false" />
-            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -438,7 +440,6 @@
             <element signature="e#289#840#0" expanded="false" />
             <element signature="e#880#1451#0" expanded="false" />
             <element signature="e#2101#2396#0" expanded="false" />
-            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -461,6 +462,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="117" column="47" lean-forward="false" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#289#840#0" expanded="false" />
+            <element signature="e#880#1451#0" expanded="false" />
+            <element signature="e#2101#2396#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/image_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -468,20 +482,6 @@
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#1606#2221#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="132" column="22" lean-forward="true" selection-start-line="132" selection-start-column="22" selection-end-line="132" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#289#840#0" expanded="false" />
-            <element signature="e#880#1451#0" expanded="false" />
-            <element signature="e#2101#2396#0" expanded="false" />
-            <element signature="e#2427#2939#0" expanded="false" />
           </folding>
         </state>
       </provider>
